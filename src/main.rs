@@ -8,13 +8,8 @@ use aptos_sdk::rest_client::{
     Transaction,
 };
 use dotenv::dotenv;
-use lib::{
-    config::OracleConfig,
-    oracle::{self, OracleClient},
-};
+use oracle_sdk::{oracle, OracleClient, OracleConfig};
 use std::error::Error;
-
-mod lib;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {

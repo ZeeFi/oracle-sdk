@@ -10,13 +10,14 @@ use aptos_sdk::{
         LocalAccount,
     },
 };
+use log::info;
 use std::{
     str::FromStr,
     time::{SystemTime, UNIX_EPOCH},
 };
 use url::Url;
 
-use crate::lib::model::{Aggregator, TokenDetails};
+use crate::model::{Aggregator, TokenDetails};
 
 use super::error::{OracleError, OracleTypedResult};
 

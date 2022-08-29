@@ -76,6 +76,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //     .unwrap()
     //     .into_inner();
 
+    /*********************** Start of Transaction *********************/
     // let result: Transaction = oracle_client
     //     .api_client
     //     .wait_for_transaction(&pending_transaction)
@@ -84,17 +85,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     // println!("The transaction is {}", result.success());
 
+    /*********************** End of Transaction *********************/
+
     // let _ = oracle_client
     //     .get_aggregator_data(default_account)
     //     .await
     //     .unwrap();
 
-    let result = oracle_client
-        .get_latest_token_data(default_account, "ETH")
-        .await
-        .unwrap();
+    // let result = oracle_client
+    //     .get_latest_token_data(default_account, "ETH")
+    //     .await
+    //     .unwrap();
 
-    info!("{:?}", result);
+    // info!("{:?}", result);
 
     Ok(())
 }

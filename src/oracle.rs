@@ -261,15 +261,20 @@ impl OracleClient {
 
         info!("{:?}", resource);
 
-        let token_symbol_data = resource
+        let token_symbol_data = &mut resource
             .tokens
             .data
             .iter()
             .filter(|value| value.key == token_symbol)
             .next()
-            .unwrap();
+            .unwrap()
+            .clone();
 
-        let latest_token_details_data = token_symbol_data.value.token_details_list.last();
+        let token_list_details = &mut token_symbol_data.value.token_details_list;
+
+        token_list_details.sort();
+
+        let latest_token_details_data = token_list_details.last();
 
         Ok(latest_token_details_data
             .unwrap_or(&Default::default())

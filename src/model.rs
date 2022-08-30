@@ -1,5 +1,6 @@
 use std::str::FromStr;
 
+use chrono::DateTime;
 use serde::{Deserialize, Deserializer, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
@@ -27,11 +28,11 @@ pub struct TokenEntry {
     pub token_details_list: Vec<TokenDetails>,
 }
 
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, PartialEq, Eq, PartialOrd)]
 pub struct TokenDetails {
     pub decimals: u8,
-    //write deserialize with
-    pub last_update: String,
+    #[serde(deserialize_with = "deserialize_string_to_date")]
+    pub last_update: i64,
     #[serde(deserialize_with = "deserialize_string")]
     pub price: u128,
 }
@@ -40,9 +41,15 @@ impl Default for TokenDetails {
     fn default() -> Self {
         Self {
             decimals: 0,
-            last_update: "".to_string(),
+            last_update: 0,
             price: 0,
         }
+    }
+}
+
+impl Ord for TokenDetails {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        (&self.last_update).cmp(&other.last_update)
     }
 }
 
@@ -59,12 +66,13 @@ where
         .map_err(<D::Error as ::serde::de::Error>::custom)
 }
 
-// fn deserialize_string_to_date<'de, D, T>(deserializer: D) -> Result<T, D::Error>
-// where
-//     T: FromStr,
-//     <T as FromStr>::Err: std::fmt::Display,
-//     D: Deserializer<'de>,
-// {
-//     let s = <String>::deserialize(deserializer)?;
+fn deserialize_string_to_date<'de, D>(deserializer: D) -> Result<i64, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let s = <String>::deserialize(deserializer)?;
 
-// }
+    let datetime = DateTime::parse_from_rfc3339(&s).unwrap();
+
+    Ok(datetime.timestamp())
+}

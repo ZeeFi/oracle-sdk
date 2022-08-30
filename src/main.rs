@@ -92,12 +92,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //     .await
     //     .unwrap();
 
-    // let result = oracle_client
-    //     .get_latest_token_data(default_account, "ETH")
-    //     .await
-    //     .unwrap();
+    let result = oracle_client
+        .get_latest_token_data(default_account, "ETH")
+        .await
+        .unwrap();
 
-    // info!("{:?}", result);
+    info!("{:?}", result);
 
     Ok(())
 }

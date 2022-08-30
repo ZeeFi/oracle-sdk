@@ -276,6 +276,10 @@ impl OracleClient {
 
         let latest_token_details_data = token_list_details.last();
 
+        println!("{:?}", token_list_details);
+
+        println!("{:?}", latest_token_details_data.unwrap());
+
         Ok(latest_token_details_data
             .unwrap_or(&Default::default())
             .clone())

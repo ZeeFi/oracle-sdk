@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use chrono::DateTime;
+//use chrono::DateTime;
 use serde::{Deserialize, Deserializer, Serialize};
 
 #[derive(Deserialize, Serialize, Debug, Default, Clone)]
@@ -31,7 +31,7 @@ pub struct TokenEntry {
 #[derive(Deserialize, Serialize, Debug, Clone, PartialEq, Eq, PartialOrd)]
 pub struct TokenDetails {
     pub decimals: u8,
-    #[serde(deserialize_with = "deserialize_string_to_date")]
+    #[serde(deserialize_with = "deserialize_string")]
     pub last_update: i64,
     #[serde(deserialize_with = "deserialize_string")]
     pub price: u128,
@@ -66,13 +66,13 @@ where
         .map_err(<D::Error as ::serde::de::Error>::custom)
 }
 
-fn deserialize_string_to_date<'de, D>(deserializer: D) -> Result<i64, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    let s = <String>::deserialize(deserializer)?;
+// fn deserialize_string_to_date<'de, D>(deserializer: D) -> Result<i64, D::Error>
+// where
+//     D: Deserializer<'de>,
+// {
+//     let s = <String>::deserialize(deserializer)?;
 
-    let datetime = DateTime::parse_from_rfc3339(&s).unwrap();
+//     let datetime = DateTime::parse_from_rfc3339(&s).unwrap();
 
-    Ok(datetime.timestamp())
-}
+//     Ok(datetime.timestamp())
+// }

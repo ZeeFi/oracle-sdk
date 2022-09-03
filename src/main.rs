@@ -40,7 +40,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //         default_account.address(),
     //         default_account,
     //         1,
-    //         "Coinbase Agggregator",
+    //         "Coinmarket Agggregator",
     //         None,
     //     )
     //     .await
@@ -76,6 +76,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //     .unwrap()
     //     .into_inner();
 
+    /****************************get feed (NOT WORKING YET IN APTOS) ********************************/
+    // let pending_transaction = oracle_client
+    //     .get_feed(default_account.address(), default_account, "ETH", None)
+    //     .await
+    //     .unwrap()
+    //     .into_inner();
+
     /*********************** Start of Transaction *********************/
     // let result: Transaction = oracle_client
     //     .api_client
@@ -92,12 +99,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
     //     .await
     //     .unwrap();
 
-    let result = oracle_client
-        .get_latest_token_data(default_account, "ETH")
-        .await
-        .unwrap();
+    // let result = oracle_client
+    //     .get_latest_token_data(default_account, "ETH")
+    //     .await
+    //     .unwrap();
 
-    info!("{:?}", result);
+    // info!("{:?}", result);
 
     Ok(())
 }

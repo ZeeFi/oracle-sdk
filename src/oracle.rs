@@ -205,6 +205,31 @@ impl OracleClient {
             })
     }
 
+    // this doesn't work yet fetch is not possible through instructions in aptos
+    pub async fn get_feed(
+        &self,
+        module_account_address: AccountAddress,
+        account: &mut LocalAccount,
+        token_symbol: &str,
+        options: Option<TransactionOptions>,
+    ) -> OracleTypedResult<Response<PendingTransaction>> {
+        let entry_function = EntryFunction::new(
+            self.get_module(module_account_address),
+            Identifier::new("get_feed").unwrap(),
+            vec![],
+            vec![bcs::to_bytes(&token_symbol).unwrap()],
+        );
+
+        self.send_transaction(account, entry_function, options)
+            .await
+            .map_err(|err| {
+                OracleError::InstructionExecutionError(format!(
+                    "The execution of get_feed failed : {}",
+                    err.to_string()
+                ))
+            })
+    }
+
     pub async fn get_aggregator_data(
         &self,
         //module_account_address: AccountAddress,
